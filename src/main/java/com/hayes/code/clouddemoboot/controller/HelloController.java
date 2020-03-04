@@ -4,9 +4,11 @@ import com.hayes.code.clouddemoboot.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.logging.Logger;
 
 @RestController
@@ -16,11 +18,13 @@ public class HelloController {
 
     @Autowired
     private DiscoveryClient client ;
+    @Autowired
+    private Registration registration; // 服务注册
 
     @RequestMapping("/hello")
     public String index(){
 
-        ServiceInstance instance = client.getLocalServiceInstance();
+        ServiceInstance instance = serviceInstance();
 
         return "/hello , " +
                 "host:"+instance.getHost()+
@@ -51,6 +55,17 @@ public class HelloController {
         logger.info(user.toString());
         return user ;
 
+    }
+
+    public ServiceInstance serviceInstance() {
+        List<ServiceInstance> list = client.getInstances(registration.getServiceId());
+        if (list != null && list.size() > 0) {
+            for(ServiceInstance itm : list){
+                if(itm.getPort() == 2001)
+                    return itm;
+            }
+        }
+        return null;
     }
 
 }
