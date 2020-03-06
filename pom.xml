@@ -71,11 +71,19 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
-        <!--引入hystrix-->
+        <!--引入hystrix 使用 alibaba sentinel 替代！！-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>-->
+        <!--</dependency>-->
+
+        <!--引入 alibaba sentinel -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <artifactId>spring-cloud-alibaba-sentinel</artifactId>
+            <version>0.2.1.RELEASE</version>
         </dependency>
+
 
     </dependencies>
 

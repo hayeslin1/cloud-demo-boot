@@ -3,7 +3,7 @@ package com.hayes.code.clouddemoboot.service;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@FeignClient("didispace")
+@FeignClient(value = "didispace" , fallback = DidiFeignServiceFallback.class )
 public interface DidiFeignService {
 
     @RequestMapping("/from1")
